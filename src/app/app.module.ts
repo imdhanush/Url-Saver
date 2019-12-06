@@ -6,15 +6,23 @@ import {AppComponent} from './app.component';
 import {LoginpageComponent} from './loginpage/loginpage.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatSliderModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatListModule, MatIconModule} from '@angular/material';
+import {
+  MatSliderModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatListModule,
+  MatIconModule,
+  MatTableModule
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginpageComponent,
     HomepageComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -26,7 +34,9 @@ import {FormsModule} from '@angular/forms';
     MatButtonModule,
     MatListModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
