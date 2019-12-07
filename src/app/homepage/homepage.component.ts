@@ -20,7 +20,9 @@ interface Data {
 export class HomepageComponent implements OnInit {
 
   constructor(private fetcher: ApiServeService) {
-
+    this.fetcher.getJsonData().subscribe((e: Data) => {
+      this.data = e;
+    });
   }
 
   // data: Data = {arr: [{link: 'some', description: 'some'}]};
@@ -28,6 +30,7 @@ export class HomepageComponent implements OnInit {
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
+
   }
 
 
@@ -41,6 +44,7 @@ export class HomepageComponent implements OnInit {
     console.log(this.data.arr);
 
     // this.fetcher.getJson();
+    this.fetcher.storeData(this.data);
 
   }
 
