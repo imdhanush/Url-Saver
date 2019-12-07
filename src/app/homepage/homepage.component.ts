@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiServeService} from '../api-serve.service';
+import {Router} from '@angular/router';
 
 
 interface List {
   link: string;
+  id: number,
   description: string;
   time: number;
 }
@@ -19,7 +21,10 @@ interface Data {
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private fetcher: ApiServeService) {
+  constructor(private fetcher: ApiServeService, private route: Router) {
+    this.route.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
     this.fetcher.getJsonData().subscribe((e: Data) => {
       this.data = e;
     });
@@ -40,11 +45,24 @@ export class HomepageComponent implements OnInit {
       return;
     }
     // @ts-ignore
-    this.data.arr.push({link, description, time: Math.round(new Date() / 1000)});
+    this.data.arr.push({id: this.data.arr.length, link, description, time: Math.round(new Date() / 1000)});
     console.log(this.data.arr);
 
     // this.fetcher.getJson();
     this.fetcher.storeData(this.data);
+
+    this.route.navigated = false;
+    this.route.navigate(['/']).then().catch();
+
+  }
+
+  deleteLink(index) {
+    this.data.arr.splice(index, 1);
+
+    this.fetcher.storeData(this.data);
+
+    this.route.navigated = false;
+    this.route.navigate(['/']).then().catch();
 
   }
 
