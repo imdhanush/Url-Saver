@@ -5,7 +5,8 @@
   - ~~Add Login~~
   - ~~Add HomePage~~
   - Design homepage
-  - Design backend
-    - Firebase
+  - ~~Design backend~~
+    - ~~Firebase~~
   - Animations
   - Add page to show saved links
+  - State Management

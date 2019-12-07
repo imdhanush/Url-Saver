@@ -51,8 +51,7 @@ export class HomepageComponent implements OnInit {
     // this.fetcher.getJson();
     this.fetcher.storeData(this.data);
 
-    this.route.navigated = false;
-    this.route.navigate(['/']).then().catch();
+    this.timeoutReload(1000);
 
   }
 
@@ -61,9 +60,14 @@ export class HomepageComponent implements OnInit {
 
     this.fetcher.storeData(this.data);
 
-    this.route.navigated = false;
-    this.route.navigate(['/']).then().catch();
+    this.timeoutReload(1000);
+  }
 
+  timeoutReload(time) {
+    setTimeout(() => {
+      this.route.navigated = false;
+      this.route.navigate(['/']).then().catch();
+    }, time);
   }
 
 
