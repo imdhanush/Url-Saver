@@ -5,8 +5,10 @@
   - ~~Add Login~~
   - ~~Add HomePage~~
   - Design homepage
-  - ~~Design backend~~
+  - Design backend
     - ~~Firebase~~
+    - UUIDs
+    - Edit data
   - Animations
   - Add page to show saved links
   - State Management

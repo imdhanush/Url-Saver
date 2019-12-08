@@ -5,12 +5,13 @@ import {Router} from '@angular/router';
 
 interface List {
   link: string;
-  id: number,
+  id: number;
   description: string;
   time: number;
 }
 
 interface Data {
+  uuid: string;
   arr: List[];
 }
 
@@ -31,7 +32,7 @@ export class HomepageComponent implements OnInit {
   }
 
   // data: Data = {arr: [{link: 'some', description: 'some'}]};
-  data: Data = {arr: []};
+  data: Data = {uuid : '', arr: []};
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
