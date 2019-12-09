@@ -14,5 +14,8 @@ export class LoginpageComponent implements OnInit {
 
   }
 
+  loginEvent(email: string, password: string) {
+    console.log(email, password);
+  }
 
 }
