@@ -1,4 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {ApiServeService} from '../api-serve.service';
+
+interface LoginData {
+  login: boolean;
+  uuid: string;
+}
 
 @Component({
   selector: 'app-loginpage',
@@ -7,7 +13,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LoginpageComponent implements OnInit {
 
-  constructor() {
+  constructor(private service: ApiServeService) {
   }
 
   ngOnInit() {
@@ -15,7 +21,14 @@ export class LoginpageComponent implements OnInit {
   }
 
   loginEvent(email: string, password: string) {
-    console.log(email, password);
+    this.service.loginAction(email, password).subscribe((e: LoginData) => {
+      if (e.login) {
+        document.cookie = `uuid = ${e.uuid}`;
+        console.log('Cookie set');
+      } else {
+        document.cookie = `uuid = ''`;
+      }
+    });
   }
 
 }
