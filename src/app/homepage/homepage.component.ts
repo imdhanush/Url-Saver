@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiServeService} from '../api-serve.service';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 
 interface List {
@@ -22,7 +23,7 @@ interface Data {
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private fetcher: ApiServeService, private route: Router) {
+  constructor(private fetcher: ApiServeService, private route: Router, private cookieS: CookieService) {
     this.route.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -32,11 +33,13 @@ export class HomepageComponent implements OnInit {
   }
 
   // data: Data = {arr: [{link: 'some', description: 'some'}]};
-  data: Data = {uuid : '', arr: []};
+  data: Data = {uuid: '', arr: []};
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
-
+    if (!this.cookieS.get('uuid')) {
+      this.route.navigate(['']);
+    }
   }
 
 

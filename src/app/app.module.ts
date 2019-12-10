@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {LoginpageComponent} from './loginpage/loginpage.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CookieService} from 'ngx-cookie-service';
 import {
   MatSliderModule,
   MatFormFieldModule,
@@ -38,7 +39,9 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     MatTableModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
