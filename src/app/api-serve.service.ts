@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
@@ -11,8 +11,9 @@ export class ApiServeService {
   }
 
   fetchUrl = 'https://jsonplaceholder.typicode.com/todos/1';
-  backendUrl = 'http://localhost:3000';
-  // backendUrl = 'https://my-saver.herokuapp.com';
+  // backendUrl = 'http://localhost:3000';
+
+  backendUrl = 'https://my-saver.herokuapp.com';
 
   private static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -26,14 +27,16 @@ export class ApiServeService {
       `${error.message}`);
   }
 
-  getJsonData() {
-    return this.http.get(this.backendUrl + '/api/data', {responseType: 'json'}).pipe(
+  getJsonData(uuid: string) {
+    return this.http.get(this.backendUrl + `/api/data?uuid=${uuid}`, {
+      responseType: 'json'
+    }).pipe(
       catchError(ApiServeService.handleError)
     );
   }
 
-  storeData(Data) {
-    this.http.post(this.backendUrl + '/api/store', {data: Data}, {responseType: 'text'}).pipe(
+  storeData(Data, uuid: string) {
+    this.http.post(this.backendUrl + '/api/store', {uuid, data: Data}, {responseType: 'text'}).pipe(
       catchError(ApiServeService.handleError)
     ).subscribe((r) => console.log('YES'));
   }

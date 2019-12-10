@@ -27,19 +27,24 @@ export class HomepageComponent implements OnInit {
     this.route.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
-    this.fetcher.getJsonData().subscribe((e: Data) => {
-      this.data = e;
+    this.fetcher.getJsonData(this.cookieS.get('uuid')).subscribe((e: Data) => {
+      if (e.arr) {
+        this.data = e;
+      }
     });
   }
 
   // data: Data = {arr: [{link: 'some', description: 'some'}]};
-  data: Data = {uuid: '', arr: []};
+  myUuid = '';
+  // @ts-ignore
+  data: Data = {uuid: '', arr: [{id: 0, link: '', description: '', time: Math.round(new Date() / 1000)}]};
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
     if (!this.cookieS.get('uuid')) {
-      this.route.navigate(['']);
+      this.route.navigate(['']).then().catch();
     }
+    this.myUuid = this.cookieS.get('uuid');
   }
 
 
@@ -51,9 +56,7 @@ export class HomepageComponent implements OnInit {
     // @ts-ignore
     this.data.arr.push({id: this.data.arr.length, link, description, time: Math.round(new Date() / 1000)});
     console.log(this.data.arr);
-
-    // this.fetcher.getJson();
-    this.fetcher.storeData(this.data);
+    this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
 
     this.timeoutReload(1000);
 
@@ -62,7 +65,7 @@ export class HomepageComponent implements OnInit {
   deleteLink(index) {
     this.data.arr.splice(index, 1);
 
-    this.fetcher.storeData(this.data);
+    this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
 
     this.timeoutReload(1000);
   }

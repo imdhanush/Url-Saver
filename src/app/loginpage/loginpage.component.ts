@@ -30,7 +30,7 @@ export class LoginpageComponent implements OnInit {
   loginEvent(email: string, password: string) {
     this.service.loginAction(email, password).subscribe((e: LoginData) => {
       if (e.login) {
-        this.cookieS.set('uuid', e.uuid, new Date(Date.now() + 90000));
+        this.cookieS.set('uuid', e.uuid);
         console.log('Cookie set');
         this.route.navigate(['home']);
       } else {
