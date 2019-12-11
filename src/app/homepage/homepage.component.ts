@@ -63,7 +63,15 @@ export class HomepageComponent implements OnInit {
   }
 
   deleteLink(index) {
-    this.data.arr.splice(index, 1);
+    console.log(index);
+
+    for (let i = 0; i < this.data.arr.length; i++) {
+      if (this.data.arr[i].id === index) {
+        this.data.arr.splice(i, 1);
+        break;
+      }
+    }
+    // this.data.arr.splice(index - 1, 1);
 
     this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
 
