@@ -18,12 +18,14 @@ import {
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {ActivatedRcComponent} from './activated-rc/activated-rc.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginpageComponent,
     HomepageComponent,
+    ActivatedRcComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatTableModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    ActivatedRcComponent
   ],
   bootstrap: [AppComponent]
 })

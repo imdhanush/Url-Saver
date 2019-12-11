@@ -41,10 +41,10 @@ export class HomepageComponent implements OnInit {
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
-    if (!this.cookieS.get('uuid')) {
-      this.route.navigate(['']).then().catch();
-    }
-    this.myUuid = this.cookieS.get('uuid');
+    // if (!this.cookieS.get('uuid')) {
+    //   this.route.navigate(['']).then().catch();
+    // }
+    // this.myUuid = this.cookieS.get('uuid');
   }
 
 

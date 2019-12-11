@@ -1,15 +1,17 @@
 <div class="wrapform">
   <form class="example-form" (ngSubmit)="loginEvent(emailE.value,passwordE.value)">
     <mat-form-field class="example-full-width">
-      <input type="email" #emailE matInput placeholder="Email" autocomplete="off"/>
+      <label>
+        <input type="email" #emailE matInput placeholder="Email" autocomplete="off"/>
+      </label>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width">
-      <input type="password" #passwordE matInput placeholder="Password"/>
+      <label>
+        <input type="password" #passwordE matInput placeholder="Password"/>
+      </label>
     </mat-form-field>
     <br>
     <button mat-button color="primary">Login</button>
-
   </form>
-
 </div>
