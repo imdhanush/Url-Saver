@@ -1,9 +1,9 @@
 import {createReducer, on} from '@ngrx/store';
-import {addEvent, incrementId} from './medium.actions';
+import {addEvent, incrementId, setEvent} from './medium.actions';
 
 export interface Holder {
   id: number;
-  time: Date;
+  time: Date | number;
   link: string;
   description: string;
 }
@@ -22,9 +22,12 @@ export const initialId: IdCountI = {count: 0};
 
 // tslint:disable-next-line:variable-name
 const _mediumReducer = createReducer(initialState, on(addEvent, (state, {id, description, link}) => ({
-  // @ts-ignore
-  arr: [...state.arr, {id, description, link, time: Math.floor(new Date() / 1000)}]
-})));
+    ...state,
+    // @ts-ignore
+    arr: [...state.arr, {id, description, link, time: Math.floor(new Date() / 1000)}]
+  })),
+  on(setEvent, (state, {data}) => ({arr: [...data]}))
+);
 
 // tslint:disable-next-line:variable-name
 const _CounterReducer = createReducer(initialId, on(incrementId, (state2 => ({...state2, count: state2.count + 1}))));
