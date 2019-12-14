@@ -4,11 +4,11 @@
   
   - ~~Add Login~~
   - ~~Add HomePage~~
-  - Design homepage
+  - ~~Design homepage~~
   - Design backend
     - ~~Firebase~~
-    - UUIDs
+    - ~~UUIDs~~
     - Edit data
   - Animations
   - Add page to show saved links
-  - State Management
+  - ~~State Management~~
