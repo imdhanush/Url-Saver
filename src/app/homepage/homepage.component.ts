@@ -2,13 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {ApiServeService} from '../api-serve.service';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-
+import {select, Store} from '@ngrx/store';
+import {State} from '../medium.reducer';
+import {addEvent} from '../medium.actions';
+import {Observable} from 'rxjs';
 
 interface List {
   link: string;
   id: number;
   description: string;
-  time: number;
+  time: Date;
 }
 
 interface Data {
@@ -16,14 +19,18 @@ interface Data {
   arr: List[];
 }
 
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
+  myData$: Observable<State>;
 
-  constructor(private fetcher: ApiServeService, private route: Router, private cookieS: CookieService) {
+  constructor(private fetcher: ApiServeService, private route: Router,
+              private cookieS: CookieService, private store: Store<{ state: State }>) {
+    this.myData$ = this.store.pipe(select('state'));
     this.route.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -34,17 +41,12 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  // data: Data = {arr: [{link: 'some', description: 'some'}]};
-  myUuid = '';
   // @ts-ignore
-  data: Data = {uuid: '', arr: [{id: 0, link: '', description: '', time: Math.round(new Date() / 1000)}]};
+  data: Data = {uuid: '', arr: []};
   displayedColumns: string[] = ['Link', 'Description'];
 
   ngOnInit() {
-    // if (!this.cookieS.get('uuid')) {
-    //   this.route.navigate(['']).then().catch();
-    // }
-    // this.myUuid = this.cookieS.get('uuid');
+    this.myData$.subscribe(e => this.data.arr = e.arr).unsubscribe();
   }
 
 
@@ -53,36 +55,24 @@ export class HomepageComponent implements OnInit {
       alert('Fields required');
       return;
     }
-    // @ts-ignore
-    this.data.arr.push({id: this.data.arr.length, link, description, time: Math.round(new Date() / 1000)});
+    this.store.dispatch(addEvent({id: this.data.arr.length + 1, description, link}));
+    this.myData$.subscribe(e => this.data.arr = e.arr).unsubscribe();
     console.log(this.data.arr);
-    this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
 
-    this.timeoutReload(1000);
+    // this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
+
 
   }
 
   deleteLink(index) {
-    console.log(index);
-
     for (let i = 0; i < this.data.arr.length; i++) {
       if (this.data.arr[i].id === index) {
         this.data.arr.splice(i, 1);
         break;
       }
     }
-    // this.data.arr.splice(index - 1, 1);
-
     this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
 
-    this.timeoutReload(1000);
-  }
-
-  timeoutReload(time) {
-    setTimeout(() => {
-      this.route.navigated = false;
-      this.route.navigate(['/']).then().catch();
-    }, time);
   }
 
 

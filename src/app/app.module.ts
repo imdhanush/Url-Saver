@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
+import {StoreModule} from '@ngrx/store';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginpageComponent} from './loginpage/loginpage.component';
@@ -19,6 +19,7 @@ import {
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRcComponent} from './activated-rc/activated-rc.component';
+import {counterReducer, mediumReducer} from './medium.reducer';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {ActivatedRcComponent} from './activated-rc/activated-rc.component';
   ],
   imports: [
     BrowserModule,
+    StoreModule.forRoot({state: mediumReducer, idCount: counterReducer}),
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSliderModule,

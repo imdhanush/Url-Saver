@@ -21,10 +21,7 @@ export class LoginpageComponent implements OnInit {
   ngOnInit() {
     if (this.cookieS.get('uuid')) {
       this.route.navigate(['home']);
-    } else {
-      alert('Login please');
     }
-
   }
 
   loginEvent(email: string, password: string) {
@@ -33,12 +30,11 @@ export class LoginpageComponent implements OnInit {
         const expiryDate = new Date();
         expiryDate.setMonth(expiryDate.getMonth() + 1);
         this.cookieS.set('uuid', e.uuid, expiryDate);
-        console.log('Cookie set');
+        // console.log('Cookie set');
         this.route.navigate(['home']);
       } else {
         document.cookie = `uuid = ''`;
       }
     });
   }
-
 }
