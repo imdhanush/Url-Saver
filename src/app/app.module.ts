@@ -20,6 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRcComponent} from './activated-rc/activated-rc.component';
 import {counterReducer, mediumReducer} from './medium.reducer';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {counterReducer, mediumReducer} from './medium.reducer';
     LoginpageComponent,
     HomepageComponent,
     ActivatedRcComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

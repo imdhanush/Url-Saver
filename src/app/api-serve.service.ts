@@ -46,5 +46,12 @@ export class ApiServeService {
       catchError(ApiServeService.handleError)
     );
   }
+
+  signUp(email: string, password: string) {
+    return this.http.post(this.backendUrl + '/signup', {email, password}, {responseType: 'json'}).pipe(
+      catchError(ApiServeService.handleError)
+    )
+      ;
+  }
 }
 

@@ -3,8 +3,8 @@ import {ApiServeService} from '../api-serve.service';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
 import {select, Store} from '@ngrx/store';
-import {Holder, State} from '../medium.reducer';
-import {addEvent, setEvent} from '../medium.actions';
+import {Holder, IdCountI, State} from '../medium.reducer';
+import {addEvent, incrementId, setEvent} from '../medium.actions';
 import {Observable} from 'rxjs';
 
 interface List {
@@ -33,11 +33,14 @@ const dummy: Holder[] = [
 })
 export class HomepageComponent implements OnInit {
   myData$: Observable<State>;
+  idCount$: Observable<IdCountI>;
 
   constructor(private fetcher: ApiServeService, private route: Router,
-              private cookieS: CookieService, private store: Store<{ state: State }>) {
+              private cookieS: CookieService, private store: Store<{ state: State, idCount: IdCountI }>) {
     this.myData$ = this.store.pipe(select('state'));
     this.myData$.subscribe(e => this.data.arr = e.arr);
+    this.idCount$ = this.store.pipe(select('idCount'));
+    this.idCount$.subscribe(e => console.log(e.count));
   }
 
   // @ts-ignore
@@ -46,14 +49,13 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.fetcher.getJsonData(this.cookieS.get('uuid')).subscribe((e: Data) => {
-      console.log('Data : ', e);
+      // console.log('Data : ', e);
       if (e.arr === undefined || e.arr === null) {
         this.store.dispatch(setEvent({data: []}));
       } else {
         this.store.dispatch(setEvent({data: e.arr}));
       }
     });
-    // this.store.dispatch(setEvent({data: dummy}));
   }
 
   getData(link, description) {
@@ -62,6 +64,7 @@ export class HomepageComponent implements OnInit {
       return;
     }
     this.store.dispatch(addEvent({id: this.data.arr.length + 1, description, link}));
+    this.store.dispatch(incrementId());
     console.log(this.data.arr);
 
     this.fetcher.storeData(this.data, this.cookieS.get('uuid'));
