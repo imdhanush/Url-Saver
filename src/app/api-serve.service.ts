@@ -11,9 +11,9 @@ export class ApiServeService {
   }
 
   fetchUrl = 'https://jsonplaceholder.typicode.com/todos/1';
-  // backendUrl = 'http://localhost:3000';
+  backendUrl = 'http://localhost:3000';
 
-  backendUrl = 'https://my-saver.herokuapp.com';
+  // backendUrl = 'https://my-saver.herokuapp.com';
 
   private static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -48,7 +48,7 @@ export class ApiServeService {
   }
 
   signUp(email: string, password: string) {
-    return this.http.post(this.backendUrl + '/signup', {email, password}, {responseType: 'json'}).pipe(
+    return this.http.post(this.backendUrl + '/api/signup', {email, password}, {responseType: 'json'}).pipe(
       catchError(ApiServeService.handleError)
     )
       ;
